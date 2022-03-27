@@ -2,6 +2,7 @@ package com.atauigu.demomybatistest;
 
 import com.atauigu.demomybatistest.Entity.User;
 import com.atauigu.demomybatistest.mapper.UserMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.var;
 import org.assertj.core.util.Sets;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Wrapper;
 import java.util.*;
 
 @SpringBootTest
@@ -17,13 +19,36 @@ class DemomybatistestApplicationTests {
     @Autowired
     private UserMapper userMapper;
 
+
+    //用mp实现复杂查询操作
+    @Test
+    public void testSelect0(){
+        //ge gt le lt
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        //也可以用父类Wrapper构建，不过QueryWrapper功能更强大
+        queryWrapper.ge("age", 22);
+        queryWrapper.eq("name","Dennis");
+        queryWrapper.between("age", 20, 30);
+        queryWrapper
+                .select("name", "age")
+                .like("name", "e")
+                .likeRight("email", "5");
+        queryWrapper.orderByDesc("age", "id");
+
+        //Useruser = userMapper.selectOne(queryWrapper);
+        //List<Map<String, Object>> maps =userMapper.selectMaps(queryWrapper);
+        List<User> users = userMapper.selectList(queryWrapper);
+
+        System.out.println(users);
+    }
+
     /**
      * 删除
      */
     //根据ID删除
     @Test
     public void testDeleteById(){
-        int rows = userMapper.deleteById(1L);
+        int rows = userMapper.deleteById(1508190241519927298L);
         System.out.println(rows);
     }
 
@@ -116,7 +141,7 @@ class DemomybatistestApplicationTests {
     @Test
     public void testAdd() {
         User user = new User();
-        user.setName("Lockmiss");
+        user.setName("JRP");
         user.setAge(20);
         user.setEmail("215381@qq.com");
         int insert = userMapper.insert(user);

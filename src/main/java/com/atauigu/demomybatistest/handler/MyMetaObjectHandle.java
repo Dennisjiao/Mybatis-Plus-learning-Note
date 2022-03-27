@@ -15,6 +15,7 @@ public class MyMetaObjectHandle implements MetaObjectHandler{
         this.setFieldValByName("createTime",new Date(),metaObject);
         this.setFieldValByName("updateTime",new Date(),metaObject);
         this.setFieldValByName("version",1,metaObject);
+        this.setFieldValByName("deleted",0,metaObject);//初始值0 0为不删除
     }
 
     //mp执行修改操作，这个方法就执行
