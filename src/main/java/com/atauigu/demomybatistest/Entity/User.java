@@ -2,6 +2,7 @@ package com.atauigu.demomybatistest.Entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 
 import java.util.Date;
@@ -17,5 +18,10 @@ public class User {
     private Date createTime;
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
+
+    //乐观锁
+    @Version
+    @TableField(fill = FieldFill.INSERT)
+    private Integer version;
 
 }
